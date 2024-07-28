@@ -1,17 +1,20 @@
 import {
   AuthBindings,
   Authenticated,
-  GitHubBanner,
   Refine,
 } from "@refinedev/core";
 import { DevtoolsPanel, DevtoolsProvider } from "@refinedev/devtools";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
-
+import { MuiInferencer } from "@refinedev/inferencer/mui";
+import home from './assets/home.png';
+import client from './assets/Client.png';
+import account from './assets/Account.png';
+import payment from './assets/Payment.png';
+import help from './assets/Help.png';
 import {
   ErrorComponent,
   notificationProvider,
   RefineSnackbarProvider,
-  ThemedLayoutV2,
 } from "@refinedev/mui";
 
 import CssBaseline from "@mui/material/CssBaseline";
@@ -25,23 +28,13 @@ import routerBindings, {
 import dataProvider from "@refinedev/simple-rest";
 import axios from "axios";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
-import { Header } from "./components/header";
+import { Header } from "./components/layout/header";
 import { ColorModeContextProvider } from "./contexts/color-mode";
-import { CredentialResponse } from "./interfaces/google";
-import {
-  BlogPostCreate,
-  BlogPostEdit,
-  BlogPostList,
-  BlogPostShow,
-} from "./pages/blog-posts";
-import {
-  CategoryCreate,
-  CategoryEdit,
-  CategoryList,
-  CategoryShow,
-} from "./pages/categories";
-import { Login } from "./pages/login";
-import { parseJwt } from "./utils/parse-jwt";
+import { Login, Overview, Client, Account, Payment, Help } from "./pages";
+
+import "./index.css";
+import Sider from "./components/layout/sider";
+import { Box } from "@mui/material";
 
 const axiosInstance = axios.create();
 axiosInstance.interceptors.request.use((config) => {
@@ -55,42 +48,31 @@ axiosInstance.interceptors.request.use((config) => {
 
 function App() {
   const authProvider: AuthBindings = {
-    login: async ({ credential }: CredentialResponse) => {
-      const profileObj = credential ? parseJwt(credential) : null;
+    login: async ({ email, password }) => {
+      if (email === "test@x.com" && password === "1234") {
+        const user = { email: "test@x.com", name: "Test User" };
+        const token = "fake-jwt-token";
 
-      if (profileObj) {
-        localStorage.setItem(
-          "user",
-          JSON.stringify({
-            ...profileObj,
-            avatar: profileObj.picture,
-          })
-        );
-
-        localStorage.setItem("token", `${credential}`);
+        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("token", token);
 
         return {
           success: true,
-          redirectTo: "/",
+          redirectTo: "/overview",
         };
       }
 
       return {
         success: false,
+        error: {
+          message: "Invalid credentials",
+          name: "Login Error",
+        },
       };
     },
     logout: async () => {
-      const token = localStorage.getItem("token");
-
-      if (token && typeof window !== "undefined") {
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-        axios.defaults.headers.common = {};
-        window.google?.accounts.id.revoke(token, () => {
-          return {};
-        });
-      }
-
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
       return {
         success: true,
         redirectTo: "/login",
@@ -102,7 +84,6 @@ function App() {
     },
     check: async () => {
       const token = localStorage.getItem("token");
-
       if (token) {
         return {
           authenticated: true,
@@ -132,7 +113,6 @@ function App() {
 
   return (
     <BrowserRouter>
-      <GitHubBanner />
       <RefineKbarProvider>
         <ColorModeContextProvider>
           <CssBaseline />
@@ -146,83 +126,92 @@ function App() {
                 authProvider={authProvider}
                 resources={[
                   {
-                    name: "blog_posts",
-                    list: "/blog-posts",
-                    create: "/blog-posts/create",
-                    edit: "/blog-posts/edit/:id",
-                    show: "/blog-posts/show/:id",
-                    meta: {
-                      canDelete: true,
-                    },
+                    name: "overview",
+                    list: Overview,
+                    meta: { label: "Overview" },
+                    icon: <img src={home} alt="Overview Icon" style={{ width: 30, height: 30 }} />,
                   },
                   {
-                    name: "categories",
-                    list: "/categories",
-                    create: "/categories/create",
-                    edit: "/categories/edit/:id",
-                    show: "/categories/show/:id",
-                    meta: {
-                      canDelete: true,
-                    },
+                    name: "client",
+                    list: Client,
+                    meta: { label: "Client" },
+                    icon: <img src={client} alt="Client Icon" style={{ width: 30, height: 30 }} />,
+                  },
+                  {
+                    name: "account",
+                    list: Account,
+                    meta: { label: "Account" },
+                    icon: <img src={account} alt="Account Icon" style={{ width: 30, height: 30 }} />,
+                  },
+                  {
+                    name: "payment",
+                    list: Payment,
+                    meta: { label: "Payment" },
+                    icon: <img src={payment} alt="Payment Icon" style={{ width: 30, height: 30 }} />,
+                  },
+                  {
+                    name: "help",
+                    list: Help,
+                    meta: { label: "Help" },
+                    icon: <img src={help} alt="Help Icon" style={{ width: 25, height: 25 }} />,
                   },
                 ]}
-                options={{
-                  syncWithLocation: true,
-                  warnWhenUnsavedChanges: true,
-                  useNewQueryKeys: true,
-                  projectId: "S8obfq-jrx83Y-sWnjSU",
-                }}
               >
-                <Routes>
-                  <Route
-                    element={
-                      <Authenticated
-                        key="authenticated-inner"
-                        fallback={<CatchAllNavigate to="/login" />}
-                      >
-                        <ThemedLayoutV2 Header={Header}>
-                          <Outlet />
-                        </ThemedLayoutV2>
-                      </Authenticated>
-                    }
+                <Box display="flex" sx={{ height: "100vh" }}>
+                  <Sider /> {/* Include your custom sider */}
+                  <Box
+                    component="main"
+                    sx={{
+                      flexGrow: 1,
+                      padding: '0px',
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
                   >
-                    <Route
-                      index
-                      element={<NavigateToResource resource="blog_posts" />}
-                    />
-                    <Route path="/blog-posts">
-                      <Route index element={<BlogPostList />} />
-                      <Route path="create" element={<BlogPostCreate />} />
-                      <Route path="edit/:id" element={<BlogPostEdit />} />
-                      <Route path="show/:id" element={<BlogPostShow />} />
-                    </Route>
-                    <Route path="/categories">
-                      <Route index element={<CategoryList />} />
-                      <Route path="create" element={<CategoryCreate />} />
-                      <Route path="edit/:id" element={<CategoryEdit />} />
-                      <Route path="show/:id" element={<CategoryShow />} />
-                    </Route>
-                    <Route path="*" element={<ErrorComponent />} />
-                  </Route>
-                  <Route
-                    element={
-                      <Authenticated
-                        key="authenticated-outer"
-                        fallback={<Outlet />}
-                      >
-                        <NavigateToResource />
-                      </Authenticated>
-                    }
-                  >
-                    <Route path="/login" element={<Login />} />
-                  </Route>
-                </Routes>
-
+                    <Header /> {/* Assuming you have a Header component */}
+                    <Box sx={{ flexGrow: 1, padding: '20px' }}>
+                      <Routes>
+                        <Route
+                          element={
+                            <Authenticated
+                              key="authenticated-inner"
+                              fallback={<CatchAllNavigate to="/login" />}
+                            >
+                              <Outlet />
+                            </Authenticated>
+                          }
+                        >
+                          <Route
+                            index
+                            element={<NavigateToResource resource="overview" />}
+                          />
+                          <Route path="/overview" element={<Overview />} />
+                          <Route path="/client" element={<Client />} />
+                          <Route path="/account" element={<Account />} />
+                          <Route path="/payment" element={<Payment />} />
+                          <Route path="/help" element={<Help />} />
+                          <Route path="*" element={<ErrorComponent />} />
+                        </Route>
+                        <Route
+                          element={
+                            <Authenticated
+                              key="authenticated-outer"
+                              fallback={<Outlet />}
+                            >
+                              <NavigateToResource />
+                            </Authenticated>
+                          }
+                        >
+                          <Route path="/login" element={<Login />} />
+                        </Route>
+                      </Routes>
+                    </Box>
+                  </Box>
+                </Box>
                 <RefineKbar />
                 <UnsavedChangesNotifier />
                 <DocumentTitleHandler />
               </Refine>
-              <DevtoolsPanel />
             </DevtoolsProvider>
           </RefineSnackbarProvider>
         </ColorModeContextProvider>

@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import { useGetIdentity } from "@refinedev/core";
 import { HamburgerMenu, RefineThemedLayoutV2HeaderProps } from "@refinedev/mui";
 import React, { useContext } from "react";
-import { ColorModeContext } from "../../contexts/color-mode";
+import { ColorModeContext } from "../../../contexts/color-mode";
 
 type IUser = {
   id: number;
@@ -25,7 +25,12 @@ export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = ({
   const { data: user } = useGetIdentity<IUser>();
 
   return (
-    <AppBar position={sticky ? "sticky" : "relative"}>
+    <AppBar 
+      color="default"
+      position="sticky"
+      elevation={0}
+      sx={{background: '#fcfcfc', padding: '0px', margin: '0px'}}
+    >
       <Toolbar>
         <Stack
           direction="row"
@@ -40,14 +45,7 @@ export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = ({
             justifyContent="flex-end"
             alignItems="center"
           >
-            <IconButton
-              color="inherit"
-              onClick={() => {
-                setMode();
-              }}
-            >
-              {mode === "dark" ? <LightModeOutlined /> : <DarkModeOutlined />}
-            </IconButton>
+           
 
             {(user?.avatar || user?.name) && (
               <Stack
