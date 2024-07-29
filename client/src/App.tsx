@@ -1,3 +1,5 @@
+import React from 'react';
+import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom';
 import {
   AuthBindings,
   Authenticated,
@@ -11,6 +13,7 @@ import client from './assets/Client.png';
 import account from './assets/Account.png';
 import payment from './assets/Payment.png';
 import help from './assets/Help.png';
+
 import {
   ErrorComponent,
   notificationProvider,
@@ -27,14 +30,13 @@ import routerBindings, {
 } from "@refinedev/react-router-v6";
 import dataProvider from "@refinedev/simple-rest";
 import axios from "axios";
-import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import { Header } from "./components/layout/header";
 import { ColorModeContextProvider } from "./contexts/color-mode";
-import { Login, Overview, Client, Account, Payment, Help } from "./pages";
-
-import "./index.css";
+import { Login, Overview, Client, Account, Payment, Help, SingleClientPage } from "./pages";
 import Sider from "./components/layout/sider";
 import { Box } from "@mui/material";
+
+import "./index.css";
 
 const axiosInstance = axios.create();
 axiosInstance.interceptors.request.use((config) => {
@@ -190,6 +192,7 @@ function App() {
                           <Route path="/account" element={<Account />} />
                           <Route path="/payment" element={<Payment />} />
                           <Route path="/help" element={<Help />} />
+                          <Route path="/client/:name" element={<SingleClientPage />} />
                           <Route path="*" element={<ErrorComponent />} />
                         </Route>
                         <Route

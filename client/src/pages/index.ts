@@ -5,7 +5,7 @@ import Account from "./account";
 import { Login } from "./login";
 import Help from "./help";
 import Client from "./client"
-
+import SingleClientPage from "./SIngleClientPage";
 export {
     Overview,
     Client,
@@ -13,5 +13,6 @@ export {
     Payment,
     Account,
     Help,
+    SingleClientPage,
     
 };
