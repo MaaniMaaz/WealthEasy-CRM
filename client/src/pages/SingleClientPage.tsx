@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Box, Typography } from '@mui/material';
-import { ClientBtns } from '../components'; // Ensure the correct path
+import {ClientBtns} from '../components'; // Ensure the correct path
 import OverviewContent from '../components/clients/OverviewContent';
 import PersonalInfoContent from '../components/clients/PersonalInfoContent';
 import AssetsContent from '../components/clients/AssetsContent';
