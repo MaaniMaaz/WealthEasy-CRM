@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Outlet, Route, Routes, Navigate } from 'react-router-dom';
 import {
   AuthBindings,
   Authenticated,
@@ -159,58 +159,27 @@ function App() {
                   },
                 ]}
               >
-                <Box display="flex" sx={{ height: "100vh" }}>
-                  <Sider /> {/* Include your custom sider */}
-                  <Box
-                    component="main"
-                    sx={{
-                      flexGrow: 1,
-                      padding: '0px',
-                      display: "flex",
-                      flexDirection: "column",
-                    }}
+                <Routes>
+                  <Route path="/login" element={<Login />} />
+                  <Route
+                    element={
+                      <Authenticated fallback={<Navigate to="/login" />}>
+                        <Layout>
+                          <Outlet />
+                        </Layout>
+                      </Authenticated>
+                    }
                   >
-                    <Header /> {/* Assuming you have a Header component */}
-                    <Box sx={{ flexGrow: 1, padding: '20px' }}>
-                      <Routes>
-                        <Route
-                          element={
-                            <Authenticated
-                              key="authenticated-inner"
-                              fallback={<CatchAllNavigate to="/login" />}
-                            >
-                              <Outlet />
-                            </Authenticated>
-                          }
-                        >
-                          <Route
-                            index
-                            element={<NavigateToResource resource="overview" />}
-                          />
-                          <Route path="/overview" element={<Overview />} />
-                          <Route path="/client" element={<Client />} />
-                          <Route path="/account" element={<Account />} />
-                          <Route path="/payment" element={<Payment />} />
-                          <Route path="/help" element={<Help />} />
-                          <Route path="/client/:name" element={<SingleClientPage />} />
-                          <Route path="*" element={<ErrorComponent />} />
-                        </Route>
-                        <Route
-                          element={
-                            <Authenticated
-                              key="authenticated-outer"
-                              fallback={<Outlet />}
-                            >
-                              <NavigateToResource />
-                            </Authenticated>
-                          }
-                        >
-                          <Route path="/login" element={<Login />} />
-                        </Route>
-                      </Routes>
-                    </Box>
-                  </Box>
-                </Box>
+                    <Route path="/" element={<Navigate to="/overview" />} />
+                    <Route path="/overview" element={<Overview />} />
+                    <Route path="/client" element={<Client />} />
+                    <Route path="/account" element={<Account />} />
+                    <Route path="/payment" element={<Payment />} />
+                    <Route path="/help" element={<Help />} />
+                    <Route path="/client/:name" element={<SingleClientPage />} />
+                    <Route path="*" element={<ErrorComponent />} />
+                  </Route>
+                </Routes>
                 <RefineKbar />
                 <UnsavedChangesNotifier />
                 <DocumentTitleHandler />
@@ -222,5 +191,27 @@ function App() {
     </BrowserRouter>
   );
 }
+
+const Layout: React.FC = ({ children }) => {
+  return (
+    <Box display="flex" sx={{ height: "100vh" }}>
+      <Sider />
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          padding: '0px',
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <Header />
+        <Box sx={{ flexGrow: 1, padding: '20px' }}>
+          {children}
+        </Box>
+      </Box>
+    </Box>
+  );
+};
 
 export default App;

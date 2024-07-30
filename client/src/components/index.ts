@@ -8,6 +8,11 @@ import TotalClients from "./charts/totalClients";
 
 //clients
 import ClientCards from "./clients/clientCards";
+import ClientBtns from "./clients/ClientBtns";
+import OverviewContent from "./clients/OverviewContent";
+import PersonalInfoContent from "./clients/PersonalInfoContent";
+import AssetsContent from "./clients/AssetsContent";
+import ActivityContent from "./clients/ActivityContent";
 
 //shared
 import CustomButton from "./shared/CustomButton";
@@ -27,6 +32,11 @@ CustomButton,
 Navbar,
 Profile,
 Form,
+ClientBtns,
+OverviewContent,
+PersonalInfoContent,
+AssetsContent,
+ActivityContent,
 
 
 
