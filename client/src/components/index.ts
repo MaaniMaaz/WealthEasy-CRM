@@ -6,6 +6,7 @@ import Welcome from "./home/Welcome";
 import TotalAssets from "./charts/totalAssets";
 import TotalClients from "./charts/totalClients";
 import ClientAssetsChart from "./charts/ClientAssetsChart";
+import AssetBreakdownChart from "./charts/AssetBreakdownChart";
 
 //clients
 import ClientCards from "./clients/clientCards";
@@ -19,6 +20,9 @@ import PrimaryContactCard from "./clients/ClientOverview/PrimaryContactCard";
 import HeadQuarterAddressCard from "./clients/ClientOverview/HeadQuarterAddressCard";
 import FinancialStatusCard from "./clients/ClientOverview/FinancialStatusCard";
 import ClientNameCard from "./clients/ClientPersonalInfo/ClientNameCard";
+import InfoCard from "./clients/ClientsAssets/InfoCard";
+import ClientMainCard from "./clients/ClientActivity/ClientMainCard";
+import CallLogDetails from "./clients/ClientActivity/CallLogDetails";
 //shared
 import CustomButton from "./shared/CustomButton";
 import { Navbar } from "./shared/Navbar";
@@ -48,8 +52,10 @@ HeadQuarterAddressCard,
 FinancialStatusCard,
 ClientNameCard,
 ClientAssetsChart,
-
-
+AssetBreakdownChart,
+InfoCard,
+ClientMainCard,
+CallLogDetails,
 
 
 }

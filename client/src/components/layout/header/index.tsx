@@ -1,14 +1,7 @@
-import DarkModeOutlined from "@mui/icons-material/DarkModeOutlined";
-import LightModeOutlined from "@mui/icons-material/LightModeOutlined";
-import AppBar from "@mui/material/AppBar";
-import Avatar from "@mui/material/Avatar";
-import IconButton from "@mui/material/IconButton";
-import Stack from "@mui/material/Stack";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
+import React, { useContext } from "react";
+import { AppBar, Avatar, TextField, MenuItem, Stack, Toolbar, Typography } from "@mui/material";
 import { useGetIdentity } from "@refinedev/core";
 import { HamburgerMenu, RefineThemedLayoutV2HeaderProps } from "@refinedev/mui";
-import React, { useContext } from "react";
 import { ColorModeContext } from "../../../contexts/color-mode";
 
 type IUser = {
@@ -17,11 +10,8 @@ type IUser = {
   avatar: string;
 };
 
-export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = ({
-  sticky = true,
-}) => {
+export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = ({ sticky = true }) => {
   const { mode, setMode } = useContext(ColorModeContext);
-
   const { data: user } = useGetIdentity<IUser>();
 
   return (
@@ -29,50 +19,66 @@ export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = ({
       color="default"
       position="sticky"
       elevation={0}
-      sx={{background: '#fcfcfc', padding: '0px', margin: '0px'}}
+      sx={{ background: '#fcfcfc', padding: '0px', margin: '0px' }}
     >
       <Toolbar>
-        <Stack
-          direction="row"
-          width="100%"
-          justifyContent="flex-end"
-          alignItems="center"
-        >
+        <Stack direction="row" width="100%" alignItems="center">
           <HamburgerMenu />
+
+          <TextField
+            variant="outlined"
+            placeholder="Search…"
+            size="small"
+            sx={{ marginLeft: 2, width: '350px' }}  // Set a fixed width for the search bar
+          />
+
           <Stack
             direction="row"
-            width="100%"
-            justifyContent="flex-end"
+            spacing={2}
             alignItems="center"
+            sx={{ marginLeft: 'auto' }}  // Push this stack to the right end
           >
-           
-
-            {(user?.avatar || user?.name) && (
-              <Stack
-                direction="row"
-                gap="16px"
-                alignItems="center"
-                justifyContent="center"
-              >
-                {user?.name && (
-                  <Typography
-                    sx={{
-                      display: {
-                        xs: "none",
-                        sm: "inline-block",
-                      },
-                    }}
-                    variant="subtitle2"
-                  >
-                    {user?.name}
-                  </Typography>
-                )}
-                <Avatar src={user?.avatar} alt={user?.name} />
-              </Stack>
-            )}
+            <MenuItem component="a" href="/" sx={{ color: 'black' }}>
+              Home
+            </MenuItem>
+            <MenuItem component="a" href="/about" sx={{ color: 'black' }}>
+              About
+            </MenuItem>
+            <MenuItem component="a" href="/contact" sx={{ color: 'black' }}>
+              Contact
+            </MenuItem>
           </Stack>
+
+          {(user?.avatar || user?.name) && (
+            <Stack
+              direction="row"
+              gap="16px"
+              alignItems="center"
+              justifyContent="flex-end"
+              sx={{ marginLeft: 2 }}  // Adjust margin to ensure proper spacing
+            >
+              {user?.name && (
+                <Typography
+                  sx={{
+                    display: {
+                      xs: "none",
+                      sm: "inline-block",
+                    },
+                    marginRight: 2,
+                    color: 'black'
+                  }}
+                  variant="subtitle2"
+                >
+                  {user?.name}
+                </Typography>
+              )}
+              <Avatar src={user?.avatar} alt={user?.name} />
+            </Stack>
+          )}
         </Stack>
       </Toolbar>
     </AppBar>
   );
 };
+
+export default Header;
