@@ -35,8 +35,8 @@ axiosInstance.interceptors.request.use((config) => {
 function App() {
   const authProvider: AuthBindings = {
     login: async ({ email, password }) => {
-      if (email === "test@x.com" && password === "1234") {
-        const user = { email: "test@x.com", name: "Test User" };
+      if (email === "Iso@sao.cc" && password === "1234") {
+        const user = { email: "test@x.com", name: "Isojjeh" };
         const token = "fake-jwt-token";
 
         localStorage.setItem("user", JSON.stringify(user));

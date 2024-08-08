@@ -29,7 +29,7 @@ export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = ({ sticky = tru
             variant="outlined"
             placeholder="Search…"
             size="small"
-            sx={{ marginLeft: 2, width: '350px' }}  // Set a fixed width for the search bar
+            sx={{ marginLeft: 5, width: '350px' }}  // Set a fixed width for the search bar
           />
 
           <Stack
