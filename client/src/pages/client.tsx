@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Typography, Box, Button, Menu, MenuItem, Divider } from '@mui/material';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import ClientCard from '../components/clients/ClientCards'; // Ensure the path to ClientCard is correct
+import { Typography, Box, Button, Menu, MenuItem, Divider, TextField } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import ClientCard from '../components/clients/ClientCards';
 
 interface Client {
   logo: string;
@@ -12,11 +12,12 @@ interface Client {
   lastContact: string;
 }
 
-const Clients = () => {
-  const navigate = useNavigate(); // Initialize useNavigate hook
+const Clients: React.FC = () => {
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [filterAnchorEl, setFilterAnchorEl] = useState<null | HTMLElement>(null);
   const [filter, setFilter] = useState('oldest');
+  const [searchTerm, setSearchTerm] = useState('');
   const [clients, setClients] = useState<Client[]>([
     { logo: 'https://via.placeholder.com/60', name: 'TATA Ltd.', location: 'New York, USA', value: '$30.6 Mil', accounts: '3 Accounts', lastContact: '2024-07-10' },
     { logo: 'https://via.placeholder.com/60', name: 'ABC Corp.', location: 'Los Angeles, USA', value: '$20.1 Mil', accounts: '5 Accounts', lastContact: '2024-07-05' },
@@ -44,6 +45,14 @@ const Clients = () => {
     });
     setClients(sortedClients);
   };
+
+  const handleSearch = (term: string) => {
+    setSearchTerm(term.toLowerCase());
+  };
+
+  const filteredClients = clients.filter(client =>
+    client.name.toLowerCase().includes(searchTerm)
+  );
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -92,6 +101,14 @@ const Clients = () => {
         <Typography fontSize={30} fontWeight={700} color="#11142d">
           Clients
         </Typography>
+        <TextField
+          variant="outlined"
+          placeholder="Search…"
+          size="small"
+          value={searchTerm}
+          onChange={(e) => handleSearch(e.target.value)}
+          sx={{ marginLeft: 2, width: '350px' }}
+        />
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Button
             onClick={handleFilterClick}
@@ -170,7 +187,7 @@ const Clients = () => {
           paddingTop: "20px",
         }}
       >
-        {clients.map((client, index) => (
+        {filteredClients.map((client, index) => (
           <ClientCard
             key={index}
             logo={client.logo}

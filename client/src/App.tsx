@@ -1,33 +1,18 @@
 import React from 'react';
 import { BrowserRouter, Outlet, Route, Routes, Navigate } from 'react-router-dom';
-import {
-  AuthBindings,
-  Authenticated,
-  Refine,
-} from "@refinedev/core";
+import { AuthBindings, Authenticated, Refine } from "@refinedev/core";
 import { DevtoolsPanel, DevtoolsProvider } from "@refinedev/devtools";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
-import { MuiInferencer } from "@refinedev/inferencer/mui";
 import home from './assets/home.png';
 import client from './assets/Client.png';
 import account from './assets/Account.png';
 import payment from './assets/Payment.png';
 import help from './assets/Help.png';
 
-import {
-  ErrorComponent,
-  notificationProvider,
-  RefineSnackbarProvider,
-} from "@refinedev/mui";
-
+import { ErrorComponent, notificationProvider, RefineSnackbarProvider } from "@refinedev/mui";
 import CssBaseline from "@mui/material/CssBaseline";
 import GlobalStyles from "@mui/material/GlobalStyles";
-import routerBindings, {
-  CatchAllNavigate,
-  DocumentTitleHandler,
-  NavigateToResource,
-  UnsavedChangesNotifier,
-} from "@refinedev/react-router-v6";
+import routerBindings, { CatchAllNavigate, DocumentTitleHandler, NavigateToResource, UnsavedChangesNotifier } from "@refinedev/react-router-v6";
 import dataProvider from "@refinedev/simple-rest";
 import axios from "axios";
 import { Header } from "./components/layout/header";
@@ -35,7 +20,6 @@ import { ColorModeContextProvider } from "./contexts/color-mode";
 import { Login, Overview, Client, Account, Payment, Help, SingleClientPage, ClientForm, CompanyForm } from "./pages";
 import Sider from "./components/layout/sider";
 import { Box } from "@mui/material";
-
 import "./index.css";
 
 const axiosInstance = axios.create();
@@ -176,8 +160,9 @@ function App() {
                     <Route path="/account" element={<Account />} />
                     <Route path="/payment" element={<Payment />} />
                     <Route path="/help" element={<Help />} />
-                    <Route path="/CompanyForm" element={<CompanyForm />} />
                     <Route path="/ClientForm" element={<ClientForm />} />
+                    <Route path="/CompanyForm" element={<CompanyForm />} />
+
                     <Route path="/client/:name" element={<SingleClientPage />} />
                     <Route path="*" element={<ErrorComponent />} />
                   </Route>
@@ -207,7 +192,7 @@ const Layout: React.FC = ({ children }) => {
           flexDirection: "column",
         }}
       >
-        <Header />
+        <Header /> {/* Include Header here */}
         <Box sx={{ flexGrow: 1, padding: '20px' }}>
           {children}
         </Box>

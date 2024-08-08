@@ -38,13 +38,13 @@ export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = ({ sticky = tru
             alignItems="center"
             sx={{ marginLeft: 'auto' }}  // Push this stack to the right end
           >
-            <MenuItem component="a" href="/" sx={{ color: 'black' }}>
+            <MenuItem component="a" href="/Overview" sx={{ color: 'black' }}>
               Home
             </MenuItem>
             <MenuItem component="a" href="/about" sx={{ color: 'black' }}>
               About
             </MenuItem>
-            <MenuItem component="a" href="/contact" sx={{ color: 'black' }}>
+            <MenuItem component="a" href="/Help" sx={{ color: 'black' }}>
               Contact
             </MenuItem>
           </Stack>
