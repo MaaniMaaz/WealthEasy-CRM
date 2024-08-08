@@ -5,7 +5,9 @@ import Account from "./account";
 import { Login } from "./login";
 import Help from "./help";
 import Client from "./client"
-import SingleClientPage from "./SIngleClientPage";
+import SingleClientPage from "./SingleClientPage";
+import ClientForm from "./clientform";
+import CompanyForm from "./companyform";
 export {
     Overview,
     Client,
@@ -14,5 +16,10 @@ export {
     Account,
     Help,
     SingleClientPage,
+    ClientForm,
+    CompanyForm,
+    
+
+
     
 };

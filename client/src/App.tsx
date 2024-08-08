@@ -32,7 +32,7 @@ import dataProvider from "@refinedev/simple-rest";
 import axios from "axios";
 import { Header } from "./components/layout/header";
 import { ColorModeContextProvider } from "./contexts/color-mode";
-import { Login, Overview, Client, Account, Payment, Help, SingleClientPage } from "./pages";
+import { Login, Overview, Client, Account, Payment, Help, SingleClientPage, ClientForm, CompanyForm } from "./pages";
 import Sider from "./components/layout/sider";
 import { Box } from "@mui/material";
 
@@ -176,6 +176,8 @@ function App() {
                     <Route path="/account" element={<Account />} />
                     <Route path="/payment" element={<Payment />} />
                     <Route path="/help" element={<Help />} />
+                    <Route path="/CompanyForm" element={<CompanyForm />} />
+                    <Route path="/ClientForm" element={<ClientForm />} />
                     <Route path="/client/:name" element={<SingleClientPage />} />
                     <Route path="*" element={<ErrorComponent />} />
                   </Route>

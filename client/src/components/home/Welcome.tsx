@@ -7,13 +7,14 @@ const Welcome: React.FC = () => {
     <Paper 
       elevation={3} 
       sx={{ 
-        padding: 4, 
+        padding: '20px',
         borderRadius: 2, 
         border: '1px solid #F2F2F2', 
         boxShadow: '0px 4px 4px rgba(86, 144, 198, 0.11)',
         width: '100%', // Set width to 100% of its parent
-        maxWidth: 900, // Set a maximum width if needed
+        maxWidth: 1280, // Set a maximum width if needed
         backgroundColor: "#fcfcfc",
+        height: '250px',
 
      
     
