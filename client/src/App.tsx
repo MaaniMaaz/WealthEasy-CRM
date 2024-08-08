@@ -13,8 +13,6 @@ import { ErrorComponent, notificationProvider, RefineSnackbarProvider } from "@r
 import CssBaseline from "@mui/material/CssBaseline";
 import GlobalStyles from "@mui/material/GlobalStyles";
 import routerBindings, { CatchAllNavigate, DocumentTitleHandler, NavigateToResource, UnsavedChangesNotifier } from "@refinedev/react-router-v6";
-import dataProvider from "@refinedev/simple-rest";
-import axios from "axios";
 import { Header } from "./components/layout/header";
 import { ColorModeContextProvider } from "./contexts/color-mode";
 import { Login, Overview, Client, Account, Payment, Help, SingleClientPage, ClientForm, CompanyForm } from "./pages";
@@ -22,21 +20,21 @@ import Sider from "./components/layout/sider";
 import { Box } from "@mui/material";
 import "./index.css";
 
-const axiosInstance = axios.create();
-axiosInstance.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
-  if (config.headers) {
-    config.headers["Authorization"] = `Bearer ${token}`;
-  }
+// const axiosInstance = axios.create();
+// axiosInstance.interceptors.request.use((config) => {
+//   const token = localStorage.getItem("token");
+//   if (config.headers) {
+//     config.headers["Authorization"] = `Bearer ${token}`;
+//   }
 
-  return config;
-});
+//   return config;
+// });
 
 function App() {
   const authProvider: AuthBindings = {
     login: async ({ email, password }) => {
-      if (email === "Iso@sao.cc" && password === "1234") {
-        const user = { email: "test@x.com", name: "Isojjeh" };
+      if (email === "iso@sao.cc" && password === "1234") {
+        const user = { email: "iso@sao.cc", name: "Isojjeh" };
         const token = "fake-jwt-token";
 
         localStorage.setItem("user", JSON.stringify(user));
@@ -106,7 +104,6 @@ function App() {
           <RefineSnackbarProvider>
             <DevtoolsProvider>
               <Refine
-                dataProvider={dataProvider("https://api.fake-rest.refine.dev")}
                 notificationProvider={notificationProvider}
                 routerProvider={routerBindings}
                 authProvider={authProvider}
@@ -125,13 +122,13 @@ function App() {
                   },
                   {
                     name: "account",
-                    list: Account,
+                    list: Account, // Update to Accounts component
                     meta: { label: "Account" },
                     icon: <img src={account} alt="Account Icon" style={{ width: 30, height: 30 }} />,
                   },
                   {
                     name: "payment",
-                    list: Payment,
+                    list: Payment, // Update to Payment component
                     meta: { label: "Payment" },
                     icon: <img src={payment} alt="Payment Icon" style={{ width: 30, height: 30 }} />,
                   },
@@ -157,12 +154,11 @@ function App() {
                     <Route path="/" element={<Navigate to="/overview" />} />
                     <Route path="/overview" element={<Overview />} />
                     <Route path="/client" element={<Client />} />
-                    <Route path="/account" element={<Account />} />
-                    <Route path="/payment" element={<Payment />} />
+                    <Route path="/account" element={<Account />} /> {/* Update to Accounts component */}
+                    <Route path="/payment" element={<Payment />} /> {/* Update to Payment component */}
                     <Route path="/help" element={<Help />} />
                     <Route path="/ClientForm" element={<ClientForm />} />
                     <Route path="/CompanyForm" element={<CompanyForm />} />
-
                     <Route path="/client/:name" element={<SingleClientPage />} />
                     <Route path="*" element={<ErrorComponent />} />
                   </Route>

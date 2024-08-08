@@ -18,7 +18,7 @@ const Overview: React.FC = () => {
         Overview
       </Typography>
       <Box mt="20px" display="flex" flexDirection={{ xs: 'column', md: 'row' }}  gap={4}>
-        <Box flex={1} minwWdth={1000}>
+        <Box flex={1} minWidth={1000}>
           <Welcome />
           <Box mt="40px" display="flex" flexDirection="row" gap={4} maxWidth={1280} justifyContent={'space-between'}>
             <TotalClients

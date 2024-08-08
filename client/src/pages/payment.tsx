@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Typography, Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 
 interface Payment {
@@ -9,14 +9,13 @@ interface Payment {
 }
 
 const Payment: React.FC = () => {
-  const [payments, setPayments] = useState<Payment[]>([
+  const payments: Payment[] = [
     { date: '2024-07-10', amount: '$100', method: 'Credit Card', description: 'Monthly Subscription' },
     { date: '2024-06-10', amount: '$100', method: 'Credit Card', description: 'Monthly Subscription' },
     { date: '2024-05-10', amount: '$100', method: 'Credit Card', description: 'Monthly Subscription' },
     { date: '2024-04-10', amount: '$100', method: 'Credit Card', description: 'Monthly Subscription' },
     { date: '2024-03-10', amount: '$100', method: 'Credit Card', description: 'Monthly Subscription' },
-    // more payment data...
-  ]);
+  ];
 
   return (
     <Box sx={{ padding: 5 }}>
