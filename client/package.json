@@ -42,11 +42,11 @@
     "vite": "^4.3.1"
   },
   "scripts": {
-    "dev": "refine dev",
-    "build": "tsc && refine build",
-    "start": "refine start",
-    "refine": "refine"
-  },
+  "dev": "set REFINE_DEVTOOLS_PORT=6001 && refine dev",
+  "build": "tsc && refine build",
+  "start": "refine start",
+  "refine": "refine"
+},
   "browserslist": {
     "production": [
       ">0.2%",
@@ -62,4 +62,6 @@
   "refine": {
     "projectId": "S8obfq-jrx83Y-sWnjSU"
   }
+
+
 }
