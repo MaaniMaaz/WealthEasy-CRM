@@ -26,7 +26,8 @@
     "react-apexcharts": "^1.4.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.30.0",
-    "react-router-dom": "^6.8.1"
+    "react-router-dom": "^6.8.1",
+    "tcs": "^10.0.2"
   },
   "devDependencies": {
     "@types/node": "^18.16.2",
@@ -43,9 +44,10 @@
     "vite": "^4.3.1"
   },
   "scripts": {
-    "dev": "cross-env NODE_ENV=development REFINE_DEVTOOLS_PORT=6001 refine dev",
-    "build": "cross-env NODE_ENV=production refine build",
-    "start": "cross-env NODE_ENV=production refine start"
+    "dev": "refine dev",
+    "build": "tcs && refine build",
+    "start": "refine start",
+    "refine": "refine"
   },
   "browserslist": {
     "production": [
