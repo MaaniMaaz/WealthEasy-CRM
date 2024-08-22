@@ -11,9 +11,10 @@ const router = express.Router();
 const User = mongoose.model('User', new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  fullName: { type: String, required: true },
+  role: { type: String, required: true }, // Assuming you also have a role field
 }));
 
-// Login API endpoint
 // Login API endpoint
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
@@ -35,13 +36,15 @@ router.post('/login', async (req, res) => {
       if (!validPassword) return res.status(400).send('Invalid password');
   
       // Create and send JWT token
-      const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
-      res.send({ token });
+      const token = jwt.sign({ _id: user._id, role: user.role }, process.env.JWT_SECRET);
+      
+      // Send back the token and user object
+      res.send({ token, user });
   
     } catch (error) {
+      console.error(error);
       res.status(500).send('Server error');
     }
-  });
-  
+});
 
 module.exports = router;

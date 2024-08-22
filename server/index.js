@@ -3,7 +3,9 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
 const cors = require('cors'); // Import the CORS middleware
-const userRoutes = require('./routes/userRoutes'); // Correctly importing the router
+
+const userRoutes = require('./routes/userRoutes'); // Import user routes
+const clientRoutes = require('./routes/clientRoutes'); // Import client routes
 
 // Load environment variables from .env file
 dotenv.config();
@@ -29,7 +31,7 @@ app.get('/', (req, res) => {
 
 // Use user routes
 app.use('/api/users', userRoutes);
-
+app.use('/api', clientRoutes);
 // Start the server
 const PORT = process.env.PORT || 7000;
 app.listen(PORT, () => {
